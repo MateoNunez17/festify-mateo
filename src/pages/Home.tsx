@@ -12,7 +12,10 @@ export default function Home() {
              className="mt-6 px-4 py-2 bg-orange-600 text-white rounded hover:bg-red-700 transition">
         Artistas
       </Link>
-              <a href="#">Festivales</a>
+      <Link to="/Festivales"
+      className="mt-6 px-4 py-2 bg-orange-600 text-white rounded hover:bg-red-700 transition">
+      Festivales
+      </Link>
               <a href="#">Escenarios</a>
               <a href="#">Entradas</a>
               <a href="#">Noticias</a>

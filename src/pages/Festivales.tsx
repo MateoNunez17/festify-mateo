@@ -1,12 +1,19 @@
+import { Link } from "react-router-dom";
 
 export default function Festivales (){
     return(
         <><header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
             <div className="max-w-7xl mx-auto h-16 px-4 flex items-center justify-between">
-                <a href="./organizador-dashboard.html" className="font-semibold">Festify Dashboard</a>
-                <nav className="hidden md:flex items-center gap-4 text-sm">
-      <a href="./admin-artistas.html">Artistas</a>
-      <a className="underline"  href="./admin-festivales.html">Festivales</a>
+                <Link to="/">Festify Dashboard</Link>
+            <nav className="hidden md:flex items-center gap-4 text-sm">
+             <Link to="/artists"
+             className="mt-6 px-4 py-2 bg-orange-600 text-white rounded hover:bg-red-700 transition">
+        Artistas
+      </Link>
+      <Link to="/Festivales"
+      className="mt-6 px-4 py-2 bg-orange-600 text-white rounded hover:bg-red-700 transition">
+      Festivales
+      </Link>
                     <a href="#">Escenarios</a>
                     <a href="#">Entradas</a>
                     <a href="#">Noticias</a>
