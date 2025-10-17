@@ -1,0 +1,23 @@
+{
+  "artists": [
+    {
+      "id": 1,
+      "name": "Los Nosequien y Los Nosecuanto",
+      "genres": ["Peru", "Rock"],
+      "country": "Peru",
+      "totalFestivals":71.2,
+      "status":"Activo"
+
+
+    },
+    {
+      "id": "art_002",
+      "name": "Pedro Suarez Vertiz",
+      "genres": ["Peru", "Rock"],
+      "country": "Peru",
+        "status":"Activo",
+      "totalFestivals":50.5
+    }
+  ]
+}
+ 
