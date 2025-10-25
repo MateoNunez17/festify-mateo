@@ -1,4 +1,5 @@
-import {useState} from "react";
+import type { CreateArtistRequest } from "@/types/artist";
+import React, {useState} from "react";
 import {Link} from "react-router-dom";
 
 type ArtistForm = {
@@ -9,25 +10,61 @@ type ArtistForm = {
     bio: string;
     status: "Activo" | "Borrador";
 };
+const defaultArtistForm: ArtistForm = {
+    name: "",
+    genres: "",
+    country: "ES",
+    listeners: 0,
+    status: "Activo",
+    bio: "",
+};
 
 export default function NewArtist() {
+    const [form, setForm] = useState<ArtistForm>(defaultArtistForm);{
+    };
 
-    const [form, setForm] = useState<ArtistForm>({
-        name: "",
-        genres: "",
-        country: "ES",
-        listeners: 0,
-        status: "Activo",
-        bio: "",
-    });
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(prev => ({ ...prev, name: e.target.value }));
+};  
 
-    
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const {name, value} = e.target;
-        setForm({ ...form,[name]:value
-        });
-           
+    const handleGenresChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(prev => ({ ...prev, genres: e.target.value }));
+};
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setForm(prev => ({ ...prev, country: e.target.value }));
+};
+    const handleListenersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setForm(prev => ({ ...prev, listeners: value === "" ? "" : Number(value) }));
+};
+    const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let Nuevo:  "Activo" | "Borrador" = "Activo";
+    if (e.target.value === "Borrador") {
+        Nuevo = "Borrador";
     }
+    setForm(prev => ({ ...prev, status: Nuevo }));  
+};
+
+    const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, bio: e.target.value }));
+};
+const handleReset =() => {
+        setForm(defaultArtistForm); 
+    }
+
+    const handleSubmit =() => {
+        const request : CreateArtistRequest= {
+            name: form.name,
+            bio: form.bio,
+            country: form.country,
+            status: form.status,
+            genres: form.genres.split(','),
+            listeners: Number(form.listeners),
+        }
+    }
+
+            
         return (
         <main className="max-w-4xl mx-auto px-4 py-8">
             <Link
@@ -55,7 +92,7 @@ export default function NewArtist() {
                         className="w-full px-3 py-2 rounded-lg border"
                         placeholder="Nombre del artista"
                         value={form.name}
-                        onChange={handleChange}
+                        onChange={handleNameChange}
                         required
                     />
                 </div>
@@ -71,7 +108,7 @@ export default function NewArtist() {
                         className="w-full px-3 py-2 rounded-lg border"
                         placeholder="Indie, Electrónica"
                         value={form.genres}
-                        onChange={handleChange}
+                        onChange={handleGenresChange}
                     />
                 </div>
 
@@ -84,11 +121,15 @@ export default function NewArtist() {
                         name="country"
                         className="w-full px-3 py-2 rounded-lg border"
                         value={form.country}
+                        onChange={handleCountryChange}
                     >
                         <option value="ES">ES</option>
                         <option value="FR">FR</option>
                         <option value="PT">PT</option>
                         <option value="UK">UK</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="COL">COL</option>
                     </select>
                 </div>
 
@@ -105,7 +146,7 @@ export default function NewArtist() {
                         className="w-full px-3 py-2 rounded-lg border"
                         placeholder="1200000"
                         value={form.listeners}
-                        onChange={handleChange}
+                        onChange={handleListenersChange}
                     />
                     <p className="text-neutral-500 mt-1">
                         Solo números. Déjalo vacío si no lo sabes.
@@ -121,6 +162,7 @@ export default function NewArtist() {
                         name="status"
                         className="w-full px-3 py-2 rounded-lg border"
                         value={form.status}
+                        onChange={handleStatusChange}
                     >
                         <option value="Activo">Activo</option>
                         <option value="Borrador">Borrador</option>
@@ -138,7 +180,7 @@ export default function NewArtist() {
                         className="w-full px-3 py-2 rounded-lg border"
                         placeholder="Resumen del artista, estilo, trayectoria…"
                         value={form.bio}
-                        onChange={handleChange}
+                        onChange={handleBioChange}
                     />
                 </div>
 
@@ -147,11 +189,12 @@ export default function NewArtist() {
                         type="submit"
                         className="px-4 py-2 rounded-lg bg-neutral-900 text-white disabled:opacity-60"
                         disabled={false}
+                        onClick={handleSubmit}
                     >
                         { "Guardar artista"}
                     </button>
 
-                    <button  type="reset" className="px-4 py-2 rounded-lg border" disabled={false}>
+                    <button onClick={handleReset} type="reset" className="px-4 py-2 rounded-lg border" disabled={false}>
                         Limpiar
                     </button>
 
